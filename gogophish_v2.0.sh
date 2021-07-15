@@ -130,6 +130,18 @@ dependencyCheck() {
         echo "${blue}${bold}[*] Installing pip...${clear}"
         apt-get install python-pip -y >/dev/null 2>&1
     fi
+
+    gcccheck=$(which gcc) # Needed to install Twilio lib
+    if [[ $gcccheck ]];
+    then
+        echo "${green}${bold}[+] Gcc already installed${clear}"
+    else
+        echo "${blue}${bold}[*] Installing gcc...${clear}"
+        apt-get install gcc -y >/dev/null 2>&1
+    fi
+
+    echo "${blue}${bold}[*] Installing libc-dev...${clear}"
+    apt-get install libc-dev -y >/dev/null 2>&1
 }
 
 ### Setup Email Version Gophish
