@@ -156,7 +156,7 @@ setupEmail() {
     echo "${blue}${bold}[*] Downloading gophish (x64)...${clear}"
     mkdir -p /root/go &&
     export GOPATH=/root/go &&
-    go get github.com/gophish/gophish >/dev/null 2>&1 &&
+    go get github.com/mplattner/gophish >/dev/null 2>&1 &&
 
     echo "${blue}${bold}[*] Creating a gophish folder: /opt/gophish${clear}"
     mkdir -p /opt/gophish &&
@@ -164,14 +164,14 @@ setupEmail() {
     if [ "$rid" != "" ]
     then
         echo "${blue}${bold}[*] Updating \"rid\" to \"$rid\"${clear}"
-        sed -i 's!rid!'$rid'!g' $GOPATH/src/github.com/gophish/gophish/models/campaign.go
-        ridConfirm=$(cat $GOPATH/src/github.com/gophish/gophish/models/campaign.go | grep $rid)
+        sed -i 's!rid!'$rid'!g' $GOPATH/src/github.com/mplattner/gophish/models/campaign.go
+        ridConfirm=$(cat $GOPATH/src/github.com/mplattner/gophish/models/campaign.go | grep $rid)
         echo "${blue}${bold}[*] Confirmation: $ridConfirm (campaign.go)${clear}"
     fi
 
-    go build $GOPATH/src/github.com/gophish/gophish &&
+    go build $GOPATH/src/github.com/mplattner/gophish &&
     mv ./gophish /opt/gophish/gophish &&
-    cp -R $GOPATH/src/github.com/gophish/gophish/* /opt/gophish &&
+    cp -R $GOPATH/src/github.com/mplattner/gophish/* /opt/gophish &&
     sed -i 's!127.0.0.1!0.0.0.0!g' /opt/gophish/config.json &&
 
     echo "${blue}${bold}[*] Creating a gophish log folder: /var/log/gophish${clear}"
@@ -194,7 +194,7 @@ setupSMS() {
     echo "${blue}${bold}[*] Downloading gophish (x64)...${clear}"
     mkdir -p /root/go &&
     export GOPATH=/root/go &&
-    go get github.com/gophish/gophish >/dev/null 2>&1 &&
+    go get github.com/mplattner/gophish >/dev/null 2>&1 &&
 
     echo "${blue}${bold}[*] Creating a gophish folder: /opt/gophish${clear}"
     mkdir -p /opt/gophish &&
@@ -202,14 +202,14 @@ setupSMS() {
     if [ "$rid" != "" ]
     then
         echo "${blue}${bold}[*] Updating \"rid\" to \"$rid\"${clear}"
-        sed -i 's!rid!'$rid'!g' $GOPATH/src/github.com/gophish/gophish/models/campaign.go
-        ridConfirm=$(cat $GOPATH/src/github.com/gophish/gophish/models/campaign.go | grep $rid)
+        sed -i 's!rid!'$rid'!g' $GOPATH/src/github.com/mplattner/gophish/models/campaign.go
+        ridConfirm=$(cat $GOPATH/src/github.com/mplattner/gophish/models/campaign.go | grep $rid)
         echo "${blue}${bold}[*] Confirmation: $ridConfirm (campaign.go)${clear}"
     fi
 
-    go build $GOPATH/src/github.com/gophish/gophish &&
+    go build $GOPATH/src/github.com/mplattner/gophish &&
     mv ./gophish /opt/gophish/gophish &&
-    cp -R $GOPATH/src/github.com/gophish/gophish/* /opt/gophish &&
+    cp -R $GOPATH/src/github.com/mplattner/gophish/* /opt/gophish &&
     sed -i 's!127.0.0.1!0.0.0.0!g' /opt/gophish/config.json &&
 
     echo "${blue}${bold}[*] Creating a gophish log folder: /var/log/gophish${clear}"
