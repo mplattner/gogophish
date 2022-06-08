@@ -180,6 +180,7 @@ setupEmail() {
     ### Start Script Setup
     cp gophish_start /etc/init.d/gophish &&
     chmod +x /etc/init.d/gophish &&
+    chmod -R 777 /opt/gophish/static/endpoint
     update-rc.d gophish defaults
 }
 
