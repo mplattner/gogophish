@@ -169,7 +169,8 @@ setupEmail() {
         echo "${blue}${bold}[*] Confirmation: $ridConfirm (campaign.go)${clear}"
     fi
 
-    go build $GOPATH/src/github.com/mplattner/gophish &&
+    cd $GOPATH/src/github.com/mplattner/gophish
+    go build &&
     mv ./gophish /opt/gophish/gophish &&
     cp -R $GOPATH/src/github.com/mplattner/gophish/* /opt/gophish &&
     sed -i 's!127.0.0.1!0.0.0.0!g' /opt/gophish/config.json &&
