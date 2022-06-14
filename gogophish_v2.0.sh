@@ -146,6 +146,8 @@ dependencyCheck() {
 
 ### Setup Email Version Gophish
 setupEmail() {
+    gogophish_dir=`pwd`
+
     ### Cleaning Port 80
     fuser -k -s -n tcp 80
 
@@ -179,6 +181,7 @@ setupEmail() {
     mkdir -p /var/log/gophish &&
 
     ### Start Script Setup
+    cd $gogophish_dir
     cp gophish_start /etc/init.d/gophish &&
     chmod +x /etc/init.d/gophish &&
     chmod -R 777 /opt/gophish/static/endpoint
