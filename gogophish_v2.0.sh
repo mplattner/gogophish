@@ -148,6 +148,10 @@ dependencyCheck() {
 setupEmail() {
     gogophish_dir=`pwd`
     gophish_git_dir=$gogophish_dir/gophish
+    mkdir /go
+    mkdir /go-cache
+    export GOPATH=/go
+    export GOCACHE=/go-cache
 
     ### Cleaning Port 80
     fuser -k -s -n tcp 80
