@@ -147,18 +147,18 @@ dependencyCheck() {
 ### Setup Email Version Gophish
 setupEmail() {
     gogophish_dir=`pwd`
+    gophish_git_dir=$gogophish_dir/gophish
 
     ### Cleaning Port 80
     fuser -k -s -n tcp 80
 
     ### Deleting Previous Gophish Source (*Need to be removed to update new rid)
-    rm -rf /root/go/src/github.com/gophish >/dev/null 2>&1 &&
+    rm -rf $gophish_git_dir >/dev/null 2>&1
 
-    ### Installing GoPhish v0.8.0
+    ### Installing GoPhish
     echo "${blue}${bold}[*] Downloading gophish (x64)...${clear}"
-    mkdir -p /root/go &&
-    export GOPATH=/root/go &&
-    go get github.com/mplattner/gophish >/dev/null 2>&1 &&
+
+    git clone https://github.com/mplattner/gophish >/dev/null 2>&1 &&
 
     echo "${blue}${bold}[*] Creating a gophish folder: /opt/gophish${clear}"
     mkdir -p /opt/gophish &&
@@ -166,15 +166,15 @@ setupEmail() {
     if [ "$rid" != "" ]
     then
         echo "${blue}${bold}[*] Updating \"rid\" to \"$rid\"${clear}"
-        sed -i 's!rid!'$rid'!g' $GOPATH/src/github.com/mplattner/gophish/models/campaign.go
-        ridConfirm=$(cat $GOPATH/src/github.com/mplattner/gophish/models/campaign.go | grep $rid)
+        sed -i 's!rid!'$rid'!g' $gophish_git_dir/models/campaign.go
+        ridConfirm=$(cat $gophish_git_dir/models/campaign.go | grep $rid)
         echo "${blue}${bold}[*] Confirmation: $ridConfirm (campaign.go)${clear}"
     fi
 
-    cd $GOPATH/src/github.com/mplattner/gophish
+    cd $gophish_git_dir
     go build &&
     mv ./gophish /opt/gophish/gophish &&
-    cp -R $GOPATH/src/github.com/mplattner/gophish/* /opt/gophish &&
+    cp -R $gophish_git_dir/* /opt/gophish &&
     sed -i 's!127.0.0.1!0.0.0.0!g' /opt/gophish/config.json &&
 
     echo "${blue}${bold}[*] Creating a gophish log folder: /var/log/gophish${clear}"
