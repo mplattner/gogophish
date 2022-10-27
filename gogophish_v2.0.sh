@@ -324,8 +324,7 @@ while getopts ":r:esd:ch" opt; do
         e)
             banner
             dependencyCheck
-            setupEmail
-            gophishStart ;;
+            setupEmail ;;
         s)
             banner
             dependencyCheck
