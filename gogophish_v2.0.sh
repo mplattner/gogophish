@@ -186,10 +186,10 @@ setupEmail() {
 
     ### Start Script Setup
     cd $gogophish_dir
-    cp gophish_start /etc/init.d/gophish &&
-    chmod +x /etc/init.d/gophish &&
+
+    cp gophish.service /etc/systemd/system/gophish.service &&
+    systemctl enable gophish &&
     chmod -R 777 /opt/gophish/static/endpoint
-    update-rc.d gophish defaults
 }
 
 setupSMS() {
@@ -257,7 +257,7 @@ setupSMS() {
 letsEncrypt() {
     ### Clearning Port 80
     fuser -k -s -n tcp 80
-    service gophish stop 2>/dev/null
+    systemctl stop gophish 2>/dev/null
 
     ### Installing certbot-auto
     echo "${blue}${bold}[*] Installing certbot...${clear}"
@@ -288,12 +288,12 @@ letsEncrypt() {
 }
 
 gophishStart() {
-    service=$(ls /etc/init.d/gophish 2>/dev/null)
+    service=$(ls /etc/systemd/system/gophish.service 2>/dev/null)
 
     if [[ $service ]];
     then
         sleep 1
-        service gophish restart &&
+        systemctl restart gophish &&
         #ipAddr=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v 127.0.0.1)
         ipAddr=$(curl ifconfig.io 2>/dev/null)
         pass=$(cat /var/log/gophish/gophish.error | grep 'Please login with' | cut -d '"' -f 4 | cut -d ' ' -f 10 | tail -n 1)
@@ -305,7 +305,7 @@ gophishStart() {
 
 cleanUp() {
     echo "${green}${bold}Cleaning...1...2...3...${clear}"
-    service gophish stop 2>/dev/null
+    systemctl stop gophish 2>/dev/null
     rm -rf /root/go/src/github.com/gophish 2>/dev/null
     rm certbot-auto* 2>/dev/null
     rm -rf /opt/gophish 2>/dev/null

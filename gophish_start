@@ -1,6 +1,6 @@
 #!/bin/bash
 # /etc/init.d/gophish
-# Description: Initialization file: service gophish {start|stop|status} 
+# Description: Initialization file: service gophish {start|stop|status}
 # Config:/opt/gophish/config.json
 
 processName=Gophish
@@ -9,7 +9,7 @@ appDirectory=/opt/gophish
 logfile=/var/log/gophish/gophish.log
 errfile=/var/log/gophish/gophish.error
 
-start() 
+start()
 {
 echo 'Starting '${processName}'...'
 cd ${appDirectory}
@@ -17,7 +17,7 @@ nohup ./$process >>$logfile 2>>$errfile &
 sleep 1
 }
 
-stop() 
+stop()
 {
 echo 'Stopping '${processName}'...'
 pid=$(/usr/bin/pidof ${process})
@@ -25,7 +25,7 @@ kill ${pid}
 sleep 1
 }
 
-status() 
+status()
 {
 pid=$(/usr/bin/pidof ${process})
 if [[ "$pid" != "" ]]; then

@@ -1,0 +1,20 @@
+# /etc/systemd/system/gophish.service
+systemctl daemon-reload
+systemctl start gophish
+
+[Unit]
+Description=Gophish Server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/gophish
+ExecStart=/opt/gophish/gophish
+EnvironmentFile=/opt/gophish.env
+StandardOutput=append:/var/log/gophish/gophish.log
+StandardError=append:/var/log/gophish/gophish.error
+
+[Install]
+WantedBy=multi-user.target
